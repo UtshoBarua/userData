@@ -1,22 +1,31 @@
 import logo from './logo.svg';
 import './App.css';
-
+import {useEffect, useState} from 'react';
+import data from './data/data.json'
+import Details from './component/Details';
 function App() {
+  const [user,setUser]= useState([])
+  const [income,setIncome] = useState(0)
+  const handleAddIncome =()=>{
+    const newIncome = {...income}
+    const annualNumber2 = parseFloat(user.annual)
+    const netIncome = newIncome + annualNumber2;
+    setIncome(netIncome)
+  }
+  
+
+  useEffect(()=>{
+      setUser(data)
+      },[])
+  console.log(user)
+ 
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h3>Total annual income of the whole employee:{income} </h3>
+      <ul>
+          {user.map(user=> <Details user={user} handleAddIncome={handleAddIncome} ></Details> )}
+      </ul>
       </header>
     </div>
   );
